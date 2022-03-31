@@ -12,8 +12,8 @@ namespace UnityAware.Systems
         private EcsFilterInject<Inc<PcMarker>> _pcs = default;
         private EcsFilterInject<Inc<PcInitialization>> _pcInits = default;
 
-        private EcsPoolInject<Ref<NavMeshAgent>> _agents = default;
-        private EcsPoolInject<Ref<Animator>> _animators = default;
+        private EcsPoolInject<NavMeshAgentRef> _agents = default;
+        private EcsPoolInject<AnimatorRef> _animators = default;
 
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
 
@@ -21,13 +21,13 @@ namespace UnityAware.Systems
         {
             foreach (int pcEnt in _pcInits.Value)
             {
-                NavMeshAgent agent = _agents.Value.Get(pcEnt).value;
+                NavMeshAgent agent = _agents.Value.Get(pcEnt).agent;
                 if (agent)
                 {
                     Animator animator = agent.GetComponentInChildren<Animator>();
                     if (animator)
                     {
-                        _animators.Value.Add(pcEnt).value = animator;
+                        _animators.Value.Add(pcEnt).animator = animator;
                     }
                 }
             }
@@ -36,8 +36,8 @@ namespace UnityAware.Systems
             {
                 if (_animators.Value.Has(pcEnt))
                 {
-                    Animator animator = _animators.Value.Get(pcEnt).value;
-                    NavMeshAgent agent = _agents.Value.Get(pcEnt).value;
+                    Animator animator = _animators.Value.Get(pcEnt).animator;
+                    NavMeshAgent agent = _agents.Value.Get(pcEnt).agent;
                     animator.SetFloat(SpeedHash, agent.velocity.magnitude / agent.speed);
                 }
             }

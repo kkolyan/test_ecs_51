@@ -3,8 +3,6 @@ using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityAware.Components;
 using UnityAware.MonoBehs;
-using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 namespace UnityAware.Systems
@@ -13,8 +11,8 @@ namespace UnityAware.Systems
     {
         private EcsFilterInject<Inc<PcInitialization>> _seeds = default;
 
-        private EcsPoolInject<Ref<NavMeshAgent>> _nmas = default;
-        private EcsPoolInject<Ref<Transform>> _transforms = default;
+        private EcsPoolInject<NavMeshAgentRef> _nmas = default;
+        private EcsPoolInject<PcTransform> _transforms = default;
 
         [Inject] private Pc.Factory _pcDolls;
 
@@ -26,8 +24,8 @@ namespace UnityAware.Systems
 
                 Pc pc = _pcDolls.Create();
                 pc.nma.Warp(pcInitialization.initialPosition);
-                _nmas.Value.Add(pcEnt).value = pc.nma;
-                _transforms.Value.Add(pcEnt).value = pc.transform;
+                _nmas.Value.Add(pcEnt).agent = pc.nma;
+                _transforms.Value.Add(pcEnt).transform = pc.transform;
 
                 pc.gameObject.GetComponent<EntityLink>().link = _seeds.Value.GetWorld().PackEntity(pcEnt);
             }

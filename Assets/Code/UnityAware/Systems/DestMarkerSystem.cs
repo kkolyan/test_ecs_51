@@ -15,7 +15,7 @@ namespace UnityAware.Systems
         private EcsFilterInject<Inc<NavigationEvent>> _navEvents = "short";
         private EcsFilterInject<Inc<DestPointerMarker>> _destPointers = default;
 
-        private EcsPoolInject<Ref<Transform>> _transforms = default;
+        private EcsPoolInject<DestPointerTransformRef> _transforms = default;
 
         private EcsWorldInject _world = default;
 
@@ -29,7 +29,7 @@ namespace UnityAware.Systems
 
                 int destPointerEnt = _world.Value.NewEntity();
                 _destPointers.Pools.Inc1.Add(destPointerEnt);
-                _transforms.Value.Add(destPointerEnt).value = destPointer.transform;
+                _transforms.Value.Add(destPointerEnt).transform = destPointer.transform;
                 destPointer.GetComponent<EntityLink>().link = _world.Value.PackEntity(destPointerEnt);
                 destPointer.gameObject.SetActive(false);
             }
@@ -40,7 +40,7 @@ namespace UnityAware.Systems
                 {
                     if (_destPointers.Pools.Inc1.Has(otherEnt))
                     {
-                        _transforms.Value.Get(otherEnt).value.gameObject.SetActive(false);
+                        _transforms.Value.Get(otherEnt).transform.gameObject.SetActive(false);
                     }
                 }
             }
@@ -49,7 +49,7 @@ namespace UnityAware.Systems
             {
                 foreach (int navEnt in _navEvents.Value)
                 {
-                    Transform transform = _transforms.Value.Get(destPointerEnt).value;
+                    Transform transform = _transforms.Value.Get(destPointerEnt).transform;
                     transform.position = _navEvents.Pools.Inc1.Get(navEnt).destination;
                     transform.gameObject.SetActive(true);
                 }

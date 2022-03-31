@@ -16,8 +16,8 @@ namespace UnityAware.Systems
         private EcsPoolInject<PcInitialization> _pcInits = default;
         private EcsPoolInject<DoorTriggerState> _triggers = default;
         private EcsPoolInject<DoorState> _doors = default;
-        private EcsPoolInject<Ref<IAdjustable>> _adjustables = default;
-        private EcsPoolInject<Ref<NavMeshObstacle>> _obstacles = default;
+        private EcsPoolInject<AdjustableRef> _adjustables = default;
+        private EcsPoolInject<NavMeshObstacleRef> _obstacles = default;
 
         private EcsWorldInject _world = default;
 
@@ -43,15 +43,15 @@ namespace UnityAware.Systems
 
                     int doorEnt = _world.Value.NewEntity();
                     _doors.Value.Add(doorEnt);
-                    _adjustables.Value.Add(doorEnt).value = trigger.door.GetComponent<IAdjustable>().FailIfNull();
+                    _adjustables.Value.Add(doorEnt).adjustable= trigger.door.GetComponent<IAdjustable>().FailIfNull();
                     NavMeshObstacle obstacle = trigger.door.GetComponent<NavMeshObstacle>();
 
-                    _obstacles.Value.Add(doorEnt).value = obstacle.FailIfNull();
+                    _obstacles.Value.Add(doorEnt).obstacle = obstacle.FailIfNull();
 
                     int triggerEnt = _world.Value.NewEntity();
                     ref DoorTriggerState doorTriggerState = ref _triggers.Value.Add(triggerEnt);
                     doorTriggerState.door = _world.Value.PackEntity(doorEnt);
-                    _adjustables.Value.Add(triggerEnt).value = trigger.GetComponent<IAdjustable>().FailIfNull(trigger);
+                    _adjustables.Value.Add(triggerEnt).adjustable = trigger.GetComponent<IAdjustable>().FailIfNull(trigger);
 
                     foreach (EntityLink child in trigger.GetComponentsInChildren<EntityLink>())
                     {

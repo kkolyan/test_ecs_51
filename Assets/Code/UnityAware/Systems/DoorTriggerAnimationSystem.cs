@@ -8,15 +8,15 @@ namespace UnityAware.Systems
 {
     public class DoorTriggerAnimationSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<TriggerLoweredDirt, DoorTriggerState, Ref<IAdjustable>>> _filter = default;
+        private EcsFilterInject<Inc<TriggerLoweredDirt>> _filter = default;
         private EcsPoolInject<DoorTriggerState> _triggerStates = default;
-        private EcsPoolInject<Ref<IAdjustable>> _adjustables = default;
+        private EcsPoolInject<AdjustableRef> _adjustables = default;
 
         public void Run(EcsSystems systems)
         {
             foreach (int doorEnt in _filter.Value)
             {
-                IAdjustable triggerAdjuster = _adjustables.Value.Get(doorEnt).value;
+                IAdjustable triggerAdjuster = _adjustables.Value.Get(doorEnt).adjustable;
                 DoorTriggerState doorTriggerState = _triggerStates.Value.Get(doorEnt);
                 triggerAdjuster.SetValue(doorTriggerState.loweringProgress);
                 

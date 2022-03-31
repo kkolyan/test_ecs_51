@@ -2,7 +2,6 @@ using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityAware.Components;
-using UnityEngine.AI;
 
 namespace UnityAware.Systems
 {
@@ -10,7 +9,7 @@ namespace UnityAware.Systems
     {
         private EcsFilterInject<Inc<NavigationRequest>> _requests = "short";
 
-        private EcsPoolInject<Ref<NavMeshAgent>> _agents = default;
+        private EcsPoolInject<NavMeshAgentRef> _agents = default;
 
         private EcsPoolInject<NavigationEvent> _navEvents = "short";
 
@@ -24,7 +23,7 @@ namespace UnityAware.Systems
                 ref NavigationRequest request = ref _requests.Pools.Inc1.Get(requestId);
                 if (request.actor.Unpack(_world.Value, out int actor))
                 {
-                    _agents.Value.Get(actor).value.SetDestination(request.destination);
+                    _agents.Value.Get(actor).agent.SetDestination(request.destination);
 
                     ref NavigationEvent navigationEvent = ref _navEvents.Value.Add(_navEvents.Value.GetWorld().NewEntity());
                     navigationEvent.actor = request.actor;
