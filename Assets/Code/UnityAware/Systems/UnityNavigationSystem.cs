@@ -1,11 +1,12 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityAware.Components;
 using UnityEngine.AI;
 
 namespace UnityAware.Systems
 {
-    public class NavMeshSystem : IEcsRunSystem
+    public class UnityNavigationSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<NavigationRequest>> _requests = "short";
 

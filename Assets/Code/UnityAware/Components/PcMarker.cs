@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityAware.EcsComponents
+namespace UnityAware.Components
 {
     [Serializable]
     public struct PcMarker { }

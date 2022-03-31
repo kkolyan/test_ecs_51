@@ -1,7 +1,7 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityAware.EcsComponents;
+using UnityAware.Components;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -34,10 +34,10 @@ namespace UnityAware.Systems
 
             foreach (int pcEnt in _pcs.Value)
             {
-                NavMeshAgent agent = _agents.Value.Get(pcEnt).value;
                 if (_animators.Value.Has(pcEnt))
                 {
                     Animator animator = _animators.Value.Get(pcEnt).value;
+                    NavMeshAgent agent = _agents.Value.Get(pcEnt).value;
                     animator.SetFloat(SpeedHash, agent.velocity.magnitude / agent.speed);
                 }
             }

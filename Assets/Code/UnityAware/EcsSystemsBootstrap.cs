@@ -1,9 +1,8 @@
-using GameCore;
 using GameCore.Components;
 using GameCore.Systems;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityAware.EcsComponents;
+using UnityAware.Components;
 using UnityAware.Systems;
 using UnityEngine;
 using Zenject;
@@ -30,15 +29,15 @@ namespace UnityAware
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("short"))
 #endif
                 .Add(new UnityCoreTimeSystem())
-                .Add(new LoadLevelSystem())
+                .Add(new LoadLevelFromUnitySystem())
                 .Add(new MouseControlSystem())
-                .Add(new NavMeshSystem())
-                .Add(new PcDollInitSystem())
+                .Add(new UnityNavigationSystem())
+                .Add(new PcOnSceneInitializationSystem())
                 .Add(new DoorTriggerSystem())
                 .Add(new DestPointerSystem())
                 .Add(new DoorAnimationSystem())
                 .Add(new DoorTriggerAnimationSystem())
-                .Add(new DoorDollTerminationSystem())
+                .Add(new DoorOnSceneTerminationSystem())
                 .Add(new DoorEntityTerminationSystem())
                 .Add(new PcAnimationSystem())
                 .Add(new ChasingCameraSystem())

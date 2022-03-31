@@ -1,11 +1,12 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityAware.Components;
 using UnityEngine.AI;
 
 namespace UnityAware.Systems
 {
-    public class DoorDollTerminationSystem : IEcsRunSystem
+    public class DoorOnSceneTerminationSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<DoorTermination>> _filter = default;
         private EcsPoolInject<Ref<NavMeshObstacle>> _obstacles = default;

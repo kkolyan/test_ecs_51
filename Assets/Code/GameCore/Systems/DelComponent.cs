@@ -1,6 +1,6 @@
 using Leopotam.EcsLite;
 
-namespace GameCore
+namespace GameCore.Systems
 {
     public class DelComponent<T>: IEcsRunSystem, IEcsInitSystem
         where T : struct

@@ -1,6 +1,7 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityAware.Components;
 using UnityAware.MonoBehs;
 
 namespace UnityAware.Systems
@@ -15,7 +16,10 @@ namespace UnityAware.Systems
         {
             foreach (int doorEnt in _filter.Value)
             {
-                _adjustables.Value.Get(doorEnt).value.SetValue(_triggerStates.Value.Get(doorEnt).loweringProgress);
+                IAdjustable triggerAdjuster = _adjustables.Value.Get(doorEnt).value;
+                DoorTriggerState doorTriggerState = _triggerStates.Value.Get(doorEnt);
+                triggerAdjuster.SetValue(doorTriggerState.loweringProgress);
+                
                 _filter.Pools.Inc1.Del(doorEnt);
             }
         }

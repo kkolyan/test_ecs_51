@@ -1,6 +1,7 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityAware.Components;
 using UnityAware.MonoBehs;
 
 namespace UnityAware.Systems

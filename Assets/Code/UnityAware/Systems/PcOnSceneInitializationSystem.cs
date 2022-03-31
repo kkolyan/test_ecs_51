@@ -1,6 +1,7 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using UnityAware.Components;
 using UnityAware.MonoBehs;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace UnityAware.Systems
 {
-    public class PcDollInitSystem : IEcsRunSystem
+    public class PcOnSceneInitializationSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<PcInitialization>> _seeds = default;
 

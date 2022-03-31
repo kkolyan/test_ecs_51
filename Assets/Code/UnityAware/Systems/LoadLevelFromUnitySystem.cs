@@ -1,15 +1,14 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityAware.EcsComponents;
+using UnityAware.Components;
 using UnityAware.MonoBehs;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 namespace UnityAware.Systems
 {
-    public class LoadLevelSystem : IEcsRunSystem
+    public class LoadLevelFromUnitySystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<SceneLoadedEvent>> _sceneLoaded = "short";
 

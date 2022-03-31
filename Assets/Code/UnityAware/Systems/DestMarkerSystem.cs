@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityAware.EcsComponents;
+using UnityAware.Components;
 using UnityAware.MonoBehs;
 using UnityEngine;
 using Zenject;
