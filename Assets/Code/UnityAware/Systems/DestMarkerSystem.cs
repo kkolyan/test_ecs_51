@@ -30,7 +30,7 @@ namespace UnityAware.Systems
                 int destPointerEnt = _world.Value.NewEntity();
                 _destPointers.Pools.Inc1.Add(destPointerEnt);
                 _transforms.Value.Add(destPointerEnt).transform = destPointer.transform;
-                destPointer.GetComponent<EntityLink>().link = _world.Value.PackEntity(destPointerEnt);
+                destPointer.entityLink.link = _world.Value.PackEntity(destPointerEnt);
                 destPointer.gameObject.SetActive(false);
             }
 

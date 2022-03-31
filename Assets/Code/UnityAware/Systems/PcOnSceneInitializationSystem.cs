@@ -27,7 +27,7 @@ namespace UnityAware.Systems
                 _nmas.Value.Add(pcEnt).agent = pc.nma;
                 _transforms.Value.Add(pcEnt).transform = pc.transform;
 
-                pc.gameObject.GetComponent<EntityLink>().link = _seeds.Value.GetWorld().PackEntity(pcEnt);
+                pc.entityLink.link = _seeds.Value.GetWorld().PackEntity(pcEnt);
             }
         }
     }

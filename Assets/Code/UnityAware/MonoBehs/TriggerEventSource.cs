@@ -10,9 +10,11 @@ namespace UnityAware.MonoBehs
         private EcsPool<TriggerEnterEvent> _enters;
         private EcsPool<TriggerExitEvent> _exits;
         private EcsWorld _world;
+        
+        [Inject] private EntityLink _entityLink;
 
         [Inject]
-        public void Init([Inject(Id = "short")] EcsWorld world)
+        public void SetWorld([Inject(Id = "short")] EcsWorld world)
         {
             _world = world;
             _enters = world.GetPool<TriggerEnterEvent>();
@@ -24,7 +26,7 @@ namespace UnityAware.MonoBehs
             if (other.TryGetComponent(out EntityLink otherLink))
             {
                 ref TriggerEnterEvent ev = ref _enters.Add(_world.NewEntity());
-                ev.source = GetComponent<EntityLink>().link;
+                ev.source = _entityLink.link;
                 ev.other = otherLink.link;
             }
         }
@@ -34,7 +36,7 @@ namespace UnityAware.MonoBehs
             if (other.TryGetComponent(out EntityLink otherLink))
             {
                 ref TriggerExitEvent ev = ref _exits.Add(_world.NewEntity());
-                ev.source = GetComponent<EntityLink>().link;
+                ev.source = _entityLink.link;
                 ev.other = otherLink.link;
             }
         }

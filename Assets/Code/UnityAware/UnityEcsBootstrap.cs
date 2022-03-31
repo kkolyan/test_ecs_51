@@ -9,7 +9,7 @@ using Zenject;
 
 namespace UnityAware
 {
-    public class EcsSystemsBootstrap : MonoBehaviour
+    public class UnityEcsBootstrap : MonoBehaviour
     {
         private EcsSystems _updateSystems;
 
@@ -29,7 +29,7 @@ namespace UnityAware
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("short"))
 #endif
                 .Add(new UnityCoreTimeSystem())
-                .Add(new LoadLevelFromUnitySystem())
+                .Add(new UnityLoadLevelSystem())
                 .Add(new MouseControlSystem())
                 .Add(new UnityNavigationSystem())
                 .Add(new PcOnSceneInitializationSystem())
@@ -38,9 +38,9 @@ namespace UnityAware
                 .Add(new DoorAnimationSystem())
                 .Add(new DoorTriggerAnimationSystem())
                 .Add(new DoorOnSceneTerminationSystem())
-                .Add(new DoorEntityTerminationSystem())
                 .Add(new PcAnimationSystem())
                 .Add(new ChasingCameraSystem())
+                .Add(new DelEntityByMarker<DoorTermination>())
                 .Add(new DelComponent<NavigationEvent>("short"))
                 .Add(new DelComponent<SceneLoadedEvent>("short"))
                 .Add(new DelComponent<TriggerEnterEvent>("short"))

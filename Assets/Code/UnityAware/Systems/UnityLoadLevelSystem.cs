@@ -4,11 +4,10 @@ using Leopotam.EcsLite.Di;
 using UnityAware.Components;
 using UnityAware.MonoBehs;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace UnityAware.Systems
 {
-    public class LoadLevelFromUnitySystem : IEcsRunSystem
+    public class UnityLoadLevelSystem : IEcsRunSystem
     {
         private EcsFilterInject<Inc<SceneLoadedEvent>> _sceneLoaded = "short";
 
@@ -25,7 +24,7 @@ namespace UnityAware.Systems
         {
             foreach (int _ in _sceneLoaded.Value)
             {
-                foreach (StartPos startPos in Object.FindObjectsOfType<StartPos>())
+                foreach (StartPosition startPos in Object.FindObjectsOfType<StartPosition>())
                 {
                     int pc = _world.Value.NewEntity();
                     _pcs.Value.Add(pc);
@@ -43,15 +42,14 @@ namespace UnityAware.Systems
 
                     int doorEnt = _world.Value.NewEntity();
                     _doors.Value.Add(doorEnt);
-                    _adjustables.Value.Add(doorEnt).adjustable= trigger.door.GetComponent<IAdjustable>().FailIfNull();
-                    NavMeshObstacle obstacle = trigger.door.GetComponent<NavMeshObstacle>();
+                    _adjustables.Value.Add(doorEnt).adjustable= trigger.door.adjustable;
 
-                    _obstacles.Value.Add(doorEnt).obstacle = obstacle.FailIfNull();
+                    _obstacles.Value.Add(doorEnt).obstacle = trigger.door.obstacle;
 
                     int triggerEnt = _world.Value.NewEntity();
                     ref DoorTriggerState doorTriggerState = ref _triggers.Value.Add(triggerEnt);
                     doorTriggerState.door = _world.Value.PackEntity(doorEnt);
-                    _adjustables.Value.Add(triggerEnt).adjustable = trigger.GetComponent<IAdjustable>().FailIfNull(trigger);
+                    _adjustables.Value.Add(triggerEnt).adjustable = trigger.adjustable;
 
                     foreach (EntityLink child in trigger.GetComponentsInChildren<EntityLink>())
                     {
