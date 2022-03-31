@@ -23,11 +23,11 @@ Entities with the only `*Request` components are meant to be handled by some par
 Consumer system is responsible for disposal of this entity. 
 
 ### Entity lifecycle
-`*Initialization` and `*Termination` components are meant to be exposed for one frame for all interested systems to handle entity lifecycle as it usually done with constructors and destructors in OOP.
+`*Initialization` and `*Termination` components are meant to be exposed on some entity during one frame for all interested systems to allow handling this entity's lifecycle. Like constructors and destructors in OOP.
 `*Initialization` sould be destroyed by special `DelComponent<>` system and `Termination` should be destroyed by special `DelEntityByMarker<>` system with the entity itself.
  
 ### References
-`*Ref` components are used to store Unity component references as ECS components. Main purpose - avoid overhead of `GetComponent*` family of Unity methods.
+`*Ref` components are used to store Unity component references as ECS components. Main purpose - avoid overhead from `GetComponent*` family of Unity methods.
 
 ### Multiple worlds
 Due to specifics of internal memory organization in LeoECS Lite, to reach optimal memory usage, two ECS worlds are used: default and "short". 
@@ -35,4 +35,4 @@ World "short" serves as home for short-living entity components.
 
 ### DI
 This project uses two DI mechanisms in parallel. [Leopotam's one](https://github.com/Leopotam/ecslite-di) for ECS resources (pools, filters, worlds) and [Zenject](https://github.com/modesttree/Zenject) for others. 
-That's done because both mechanisms do well in their areas, quite popular and do not conflict.
+They used both because both mechanisms do better than each other in their areas, both quite popular and do not conflict.
