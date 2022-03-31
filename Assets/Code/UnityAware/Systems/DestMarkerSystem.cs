@@ -10,7 +10,7 @@ namespace UnityAware.Systems
 {
     public class DestPointerSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<TriggerEnterEvent>> _enters = "short";
+        private EcsFilterInject<Inc<TriggerEnterEvent<DestPointerMarker>>> _enters = "short";
         private EcsFilterInject<Inc<SceneLoadedEvent>> _sceneLoaded = "short";
         private EcsFilterInject<Inc<NavigationEvent>> _navEvents = "short";
         private EcsFilterInject<Inc<DestPointerMarker>> _destPointers = default;

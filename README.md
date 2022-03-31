@@ -36,3 +36,6 @@ World "short" serves as home for short-living entity components.
 ### DI
 This project uses two DI mechanisms in parallel. [Leopotam's one](https://github.com/Leopotam/ecslite-di) for ECS resources (pools, filters, worlds) and [Zenject](https://github.com/modesttree/Zenject) for others. 
 They used both because both mechanisms do better than each other in their areas, both quite popular and do not conflict.
+
+### generic TriggerEvents
+Trigger events specialized to reduce loops. For the simple isometric game that's most likely an overhead, but could be a viable optimization in case of heavy events flow.

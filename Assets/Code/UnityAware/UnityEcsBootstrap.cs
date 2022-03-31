@@ -22,7 +22,6 @@ namespace UnityAware
             _updateSystems = new EcsSystems(_world);
 
             _updateSystems.AddWorld(_worldShort, "short");
-
             _updateSystems
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
@@ -43,10 +42,13 @@ namespace UnityAware
                 .Add(new DelEntityByMarker<DoorTermination>())
                 .Add(new DelComponent<NavigationEvent>("short"))
                 .Add(new DelComponent<SceneLoadedEvent>("short"))
-                .Add(new DelComponent<TriggerEnterEvent>("short"))
-                .Add(new DelComponent<TriggerExitEvent>("short"))
+                .Add(new DelComponent<TriggerEnterEvent<DestPointerMarker>>("short"))
+                .Add(new DelComponent<TriggerExitEvent<DestPointerMarker>>("short"))
+                .Add(new DelComponent<TriggerEnterEvent<DoorTriggerState>>("short"))
+                .Add(new DelComponent<TriggerExitEvent<DoorTriggerState>>("short"))
                 .Add(new DelComponent<SceneLoadedEvent>("short"))
                 .Add(new DelComponent<PcInitialization>());
+
 
             InjectWithinSystems(_updateSystems);
 

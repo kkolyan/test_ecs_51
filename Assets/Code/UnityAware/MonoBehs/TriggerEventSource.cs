@@ -5,10 +5,11 @@ using Zenject;
 
 namespace UnityAware.MonoBehs
 {
-    public class TriggerEventSource : MonoBehaviour
+    public abstract class TriggerEventSource<T> : MonoBehaviour 
+        where T: struct
     {
-        private EcsPool<TriggerEnterEvent> _enters;
-        private EcsPool<TriggerExitEvent> _exits;
+        private EcsPool<TriggerEnterEvent<T>> _enters;
+        private EcsPool<TriggerExitEvent<T>> _exits;
         private EcsWorld _world;
         
         [Inject] private EntityLink _entityLink;
@@ -17,15 +18,15 @@ namespace UnityAware.MonoBehs
         public void SetWorld([Inject(Id = "short")] EcsWorld world)
         {
             _world = world;
-            _enters = world.GetPool<TriggerEnterEvent>();
-            _exits = world.GetPool<TriggerExitEvent>();
+            _enters = world.GetPool<TriggerEnterEvent<T>>();
+            _exits = world.GetPool<TriggerExitEvent<T>>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out EntityLink otherLink))
             {
-                ref TriggerEnterEvent ev = ref _enters.Add(_world.NewEntity());
+                ref TriggerEnterEvent<T> ev = ref _enters.Add(_world.NewEntity());
                 ev.source = _entityLink.link;
                 ev.other = otherLink.link;
             }
@@ -35,7 +36,7 @@ namespace UnityAware.MonoBehs
         {
             if (other.TryGetComponent(out EntityLink otherLink))
             {
-                ref TriggerExitEvent ev = ref _exits.Add(_world.NewEntity());
+                ref TriggerExitEvent<T> ev = ref _exits.Add(_world.NewEntity());
                 ev.source = _entityLink.link;
                 ev.other = otherLink.link;
             }
