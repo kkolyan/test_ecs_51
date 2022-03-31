@@ -2,6 +2,7 @@ using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using UnityAware.MonoBehs;
+using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
@@ -12,20 +13,22 @@ namespace UnityAware.Systems
         private EcsFilterInject<Inc<PcInitialization>> _seeds = default;
 
         private EcsPoolInject<Ref<NavMeshAgent>> _nmas = default;
+        private EcsPoolInject<Ref<Transform>> _transforms = default;
 
-        [Inject] private PcDoll.Factory _pcDolls;
+        [Inject] private Pc.Factory _pcDolls;
 
         public void Run(EcsSystems systems)
         {
-            foreach (int pc in _seeds.Value)
+            foreach (int pcEnt in _seeds.Value)
             {
-                PcInitialization pcInitialization = _seeds.Pools.Inc1.Get(pc);
+                PcInitialization pcInitialization = _seeds.Pools.Inc1.Get(pcEnt);
 
-                PcDoll pcDoll = _pcDolls.Create();
-                pcDoll.transform.position = pcInitialization.initialPosition;
-                _nmas.Value.Add(pc).value = pcDoll.nma;
+                Pc pc = _pcDolls.Create();
+                pc.nma.Warp(pcInitialization.initialPosition);
+                _nmas.Value.Add(pcEnt).value = pc.nma;
+                _transforms.Value.Add(pcEnt).value = pc.transform;
 
-                pcDoll.gameObject.GetComponent<EntityLink>().link = _seeds.Value.GetWorld().PackEntityWithWorld(pc);
+                pc.gameObject.GetComponent<EntityLink>().link = _seeds.Value.GetWorld().PackEntity(pcEnt);
             }
         }
     }

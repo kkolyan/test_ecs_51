@@ -7,6 +7,6 @@ namespace UnityAware.SO
     {
         public GameObject pcPrefab;
         public SettingsAsset settingsAsset;
-        public GameObject destMarkerPrefab;
+        public GameObject destPointerPrefab;
     }
 }

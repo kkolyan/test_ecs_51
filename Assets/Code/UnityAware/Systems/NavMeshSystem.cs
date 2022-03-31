@@ -1,26 +1,27 @@
 using GameCore.Components;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
-using UnityAware.EcsComponents;
 using UnityEngine.AI;
 
 namespace UnityAware.Systems
 {
     public class NavMeshSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<NavigationCalculationRequest>> _requests = default;
+        private EcsFilterInject<Inc<NavigationRequest>> _requests = default;
 
         private EcsPoolInject<Ref<NavMeshAgent>> _agents = default;
 
         private EcsPoolInject<NavigationEvent> _navEvents = default;
+
+        private EcsWorldInject _world = default;
 
         public void Run(EcsSystems systems)
         {
 
             foreach (int requestId in _requests.Value)
             {
-                ref NavigationCalculationRequest request = ref _requests.Pools.Inc1.Get(requestId);
-                if (request.actor.Unpack(out EcsWorld _, out int actor))
+                ref NavigationRequest request = ref _requests.Pools.Inc1.Get(requestId);
+                if (request.actor.Unpack(_world.Value, out int actor))
                 {
                     _agents.Value.Get(actor).value.SetDestination(request.destination);
                 }

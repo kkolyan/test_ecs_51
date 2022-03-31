@@ -33,7 +33,7 @@ namespace UnityAware.Systems
                     _pcs.Value.Add(pc);
                     _pcInits.Value.Add(pc).initialPosition = startPos.transform.position;
 
-                    startPos.enabled = false;
+                    startPos.gameObject.SetActive(false);
                 }
 
                 foreach (DoorTrigger trigger in Object.FindObjectsOfType<DoorTrigger>())
@@ -53,13 +53,13 @@ namespace UnityAware.Systems
 
                     int triggerEnt = _world.Value.NewEntity();
                     ref DoorTriggerState doorTriggerState = ref _triggers.Value.Add(triggerEnt);
-                    doorTriggerState.door = _world.Value.PackEntityWithWorld(doorEnt);
+                    doorTriggerState.door = _world.Value.PackEntity(doorEnt);
                     _initPendings.Value.Add(triggerEnt);
                     _adjustables.Value.Add(triggerEnt).value = trigger.GetComponent<IAdjustable>().FailIfNull(trigger);
 
                     foreach (EntityLink child in trigger.GetComponentsInChildren<EntityLink>())
                     {
-                        child.link = _world.Value.PackEntityWithWorld(triggerEnt);
+                        child.link = _world.Value.PackEntity(triggerEnt);
                     }
                 }
             }

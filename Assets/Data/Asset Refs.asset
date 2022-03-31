@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20588beaaa77429495740ecfdf68f57d, type: 3}
   m_Name: Asset Refs
   m_EditorClassIdentifier: 
-  pcPrefab: {fileID: 8423630271012152486, guid: cdc21ce4191156b4f8237f6210d63222,
+  pcPrefab: {fileID: 8423630271012152486, guid: 7309480faf332a34493c5deda9edc855,
     type: 3}
   settingsAsset: {fileID: 11400000, guid: 74f01c57041f8e5469b6a22200d9c269, type: 2}
-  destMarkerPrefab: {fileID: 6766081513740626225, guid: 20b9ae41893d9ec4c97794a8d0c73730,
+  destPointerPrefab: {fileID: 6766081513740626225, guid: 20b9ae41893d9ec4c97794a8d0c73730,
     type: 3}

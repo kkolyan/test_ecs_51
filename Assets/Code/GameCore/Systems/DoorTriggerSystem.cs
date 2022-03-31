@@ -16,6 +16,8 @@ namespace GameCore.Systems
         private EcsPoolInject<TriggerLoweredDirt> _triggerLoweredDirt = default;
         private EcsPoolInject<DoorTermination> _terminations = default;
 
+        private EcsWorldInject _world = default;
+
         [Inject] private CoreTime _time;
         [Inject] private GameSettings _settings;
 
@@ -24,7 +26,7 @@ namespace GameCore.Systems
             EcsPool<DoorTriggerState> triggers = _triggers.Pools.Inc1;
             foreach (int enterEnt in _enters.Value)
             {
-                if (_enters.Pools.Inc1.Get(enterEnt).other.Unpack(out _, out int otherEnt))
+                if (_enters.Pools.Inc1.Get(enterEnt).other.Unpack(_world.Value, out int otherEnt))
                 {
                     if (triggers.Has(otherEnt))
                     {
@@ -35,7 +37,7 @@ namespace GameCore.Systems
 
             foreach (int exitEnt in _exits.Value)
             {
-                if (_exits.Pools.Inc1.Get(exitEnt).other.Unpack(out _, out int otherEnt))
+                if (_exits.Pools.Inc1.Get(exitEnt).other.Unpack(_world.Value, out int otherEnt))
                 {
                     if (triggers.Has(otherEnt))
                     {
@@ -48,17 +50,17 @@ namespace GameCore.Systems
             {
                 ref DoorTriggerState triggerState = ref triggers.Get(triggerEnt);
 
-                if (triggerState.door.Unpack(out EcsWorld _, out int doorEnt))
+                if (triggerState.stoodOn)
                 {
-                    ref DoorState doorState = ref _doors.Value.Get(doorEnt);
-                    if (triggerState.stoodOn)
+                    if (triggerState.loweringProgress < 1)
                     {
-                        if (triggerState.loweringProgress < 1)
-                        {
-                            triggerState.loweringProgress += _settings.triggerLoweringSpeed * _time.deltaTime;
-                            _triggerLoweredDirt.Value.GetOrAdd(triggerEnt);
-                        }
+                        triggerState.loweringProgress += _settings.triggerLoweringSpeed * _time.deltaTime;
+                        _triggerLoweredDirt.Value.GetOrAdd(triggerEnt);
+                    }
 
+                    if (triggerState.door.Unpack(_world.Value, out int doorEnt))
+                    {
+                        ref DoorState doorState = ref _doors.Value.Get(doorEnt);
                         if (doorState.openProgress < 1)
                         {
                             doorState.openProgress += _settings.doorOpenSpeed * _time.deltaTime;
@@ -69,13 +71,13 @@ namespace GameCore.Systems
                             }
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if (triggerState.loweringProgress > 0)
                     {
-                        if (triggerState.loweringProgress > 0)
-                        {
-                            triggerState.loweringProgress -= _settings.triggerLoweringSpeed * _time.deltaTime;
-                            _triggerLoweredDirt.Value.GetOrAdd(triggerEnt);
-                        }
+                        triggerState.loweringProgress -= _settings.triggerLoweringSpeed * _time.deltaTime;
+                        _triggerLoweredDirt.Value.GetOrAdd(triggerEnt);
                     }
                 }
             }

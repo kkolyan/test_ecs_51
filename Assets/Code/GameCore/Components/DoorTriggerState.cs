@@ -8,6 +8,6 @@ namespace GameCore.Components
     {
         public float loweringProgress;
         public bool stoodOn;
-        public EcsPackedEntityWithWorld door;
+        public EcsPackedEntity door;
     }
 }

@@ -5,6 +5,6 @@ namespace UnityAware.MonoBehs
 {
     public class EntityLink: MonoBehaviour
     {
-        public EcsPackedEntityWithWorld link;
+        public EcsPackedEntity link;
     }
 }

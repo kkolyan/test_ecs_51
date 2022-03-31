@@ -16,10 +16,10 @@ public class BasicInstaller : ScriptableObjectInstaller<BasicInstaller>
         Container.BindInstance(new CoreTime());
         Container.BindInstance(new EcsWorld());
         Container.Bind<AssetRefs>().FromScriptableObject(assetRefs).AsTransient();
-        Container.Bind<PcDoll.Factory>().AsSingle();
-        Container.Bind<DestMarker.Factory>().AsSingle();
-        Container.Bind<PcDoll>().FromComponentInNewPrefab(assetRefs.pcPrefab).AsTransient();
-        Container.Bind<DestMarker>().FromComponentInNewPrefab(assetRefs.destMarkerPrefab).AsTransient();
+        Container.Bind<Pc.Factory>().AsSingle();
+        Container.Bind<DestPointer.Factory>().AsSingle();
+        Container.Bind<Pc>().FromComponentInNewPrefab(assetRefs.pcPrefab).AsTransient();
+        Container.Bind<DestPointer>().FromComponentInNewPrefab(assetRefs.destPointerPrefab).AsTransient();
         Container.Bind<NavMeshAgent>().FromComponentSibling().AsTransient();
         Container.BindInstance(assetRefs.settingsAsset.gameSettings);
     }

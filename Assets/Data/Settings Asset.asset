@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Settings Asset
   m_EditorClassIdentifier: 
   gameSettings:
-    triggerLoweringSpeed: 1
+    triggerLoweringSpeed: 5
     doorOpenSpeed: 1

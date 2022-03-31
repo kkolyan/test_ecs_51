@@ -5,9 +5,9 @@ using UnityEngine;
 namespace GameCore.Components
 {
     [Serializable]
-    public struct NavigationCalculationRequest
+    public struct NavigationRequest
     {
-        public EcsPackedEntityWithWorld actor;
+        public EcsPackedEntity actor;
         public Vector3 destination;
     }
 }

@@ -7,7 +7,7 @@ namespace GameCore.Components
     [Serializable]
     public struct NavigationEvent
     {
-        public EcsPackedEntityWithWorld actor;
+        public EcsPackedEntity actor;
         public Vector3 destination;
     }
 }

@@ -10,7 +10,7 @@ namespace UnityAware.Systems
     {
         private RaycastHit[] _results = new RaycastHit[1];
 
-        private readonly EcsPoolInject<NavigationCalculationRequest> _navRequests = default;
+        private readonly EcsPoolInject<NavigationRequest> _navRequests = default;
         private EcsFilterInject<Inc<PcMarker>> _pcs = default;
 
         public void Run(EcsSystems systems)
@@ -24,9 +24,9 @@ namespace UnityAware.Systems
                 {
                     foreach (int pc in _pcs.Value)
                     {
-                        ref NavigationCalculationRequest request = ref _navRequests.Value.Add(_navRequests.Value.GetWorld().NewEntity());
+                        ref NavigationRequest request = ref _navRequests.Value.Add(_navRequests.Value.GetWorld().NewEntity());
                         request.destination = _results[i].point;
-                        request.actor = _pcs.Value.GetWorld().PackEntityWithWorld(pc);
+                        request.actor = _pcs.Value.GetWorld().PackEntity(pc);
                     }
                 }
             }

@@ -4,12 +4,12 @@ using Zenject;
 
 namespace UnityAware.MonoBehs
 {
-    public class PcDoll : MonoBehaviour
+    public class Pc : MonoBehaviour
     {
         [HideInInspector]
         [Inject]
         public NavMeshAgent nma;
         
-        public class Factory : PlainResolvingFactory<PcDoll> { }
+        public class Factory : PlainResolvingFactory<Pc> { }
     }
 }

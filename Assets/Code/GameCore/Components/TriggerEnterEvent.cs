@@ -6,7 +6,7 @@ namespace GameCore.Components
     [Serializable]
     public struct TriggerEnterEvent
     {
-        public EcsPackedEntityWithWorld source;
-        public EcsPackedEntityWithWorld other;
+        public EcsPackedEntity source;
+        public EcsPackedEntity other;
     }
 }

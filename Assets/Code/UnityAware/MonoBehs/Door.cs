@@ -2,7 +2,5 @@ using UnityEngine;
 
 namespace UnityAware.MonoBehs
 {
-    public class Door: MonoBehaviour
-    {
-    }
+    public class Door : MonoBehaviour { }
 }
