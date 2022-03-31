@@ -7,8 +7,8 @@ namespace GameCore.Systems
 {
     public class DoorTriggerSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<TriggerEnterEvent>> _enters = default;
-        private EcsFilterInject<Inc<TriggerExitEvent>> _exits = default;
+        private EcsFilterInject<Inc<TriggerEnterEvent>> _enters = "short";
+        private EcsFilterInject<Inc<TriggerExitEvent>> _exits = "short";
         private EcsFilterInject<Inc<DoorTriggerState>> _triggers = default;
 
         private EcsPoolInject<DoorState> _doors = default;

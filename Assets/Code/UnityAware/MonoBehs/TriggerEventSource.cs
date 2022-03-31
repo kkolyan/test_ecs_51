@@ -5,14 +5,14 @@ using Zenject;
 
 namespace UnityAware.MonoBehs
 {
-    public class TriggerEventSource: MonoBehaviour
+    public class TriggerEventSource : MonoBehaviour
     {
         private EcsPool<TriggerEnterEvent> _enters;
         private EcsPool<TriggerExitEvent> _exits;
         private EcsWorld _world;
 
         [Inject]
-        public void Init(EcsWorld world)
+        public void Init([Inject(Id = "short")] EcsWorld world)
         {
             _world = world;
             _enters = world.GetPool<TriggerEnterEvent>();

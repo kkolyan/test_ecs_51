@@ -7,11 +7,11 @@ namespace UnityAware.Systems
 {
     public class NavMeshSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<NavigationRequest>> _requests = default;
+        private EcsFilterInject<Inc<NavigationRequest>> _requests = "short";
 
         private EcsPoolInject<Ref<NavMeshAgent>> _agents = default;
 
-        private EcsPoolInject<NavigationEvent> _navEvents = default;
+        private EcsPoolInject<NavigationEvent> _navEvents = "short";
 
         private EcsWorldInject _world = default;
 
@@ -24,11 +24,11 @@ namespace UnityAware.Systems
                 if (request.actor.Unpack(_world.Value, out int actor))
                 {
                     _agents.Value.Get(actor).value.SetDestination(request.destination);
-                }
 
-                ref NavigationEvent navigationEvent = ref _navEvents.Value.Add(_navEvents.Value.GetWorld().NewEntity());
-                navigationEvent.actor = request.actor;
-                navigationEvent.destination = request.destination;
+                    ref NavigationEvent navigationEvent = ref _navEvents.Value.Add(_navEvents.Value.GetWorld().NewEntity());
+                    navigationEvent.actor = request.actor;
+                    navigationEvent.destination = request.destination;
+                }
 
                 _requests.Value.GetWorld().DelEntity(requestId);
             }

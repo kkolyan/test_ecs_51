@@ -16,14 +16,18 @@ namespace UnityAware
 
         [Inject] private DiContainer _container;
         [Inject] private EcsWorld _world;
+        [Inject(Id = "short")] private EcsWorld _worldShort;
 
         private void OnEnable()
         {
             _updateSystems = new EcsSystems(_world);
 
+            _updateSystems.AddWorld(_worldShort, "short");
+
             _updateSystems
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem("short"))
 #endif
                 .Add(new UnityCoreTimeSystem())
                 .Add(new LoadLevelSystem())
@@ -38,19 +42,19 @@ namespace UnityAware
                 .Add(new DoorEntityTerminationSystem())
                 .Add(new PcAnimationSystem())
                 .Add(new ChasingCameraSystem())
-                .Add(new DelComponent<NavigationEvent>())
-                .Add(new DelComponent<SceneLoadedEvent>())
-                .Add(new DelComponent<TriggerEnterEvent>())
-                .Add(new DelComponent<TriggerExitEvent>())
-                .Add(new DelComponent<PcInitialization>())
-                .Add(new DelComponent<SceneLoadedEvent>());
+                .Add(new DelComponent<NavigationEvent>("short"))
+                .Add(new DelComponent<SceneLoadedEvent>("short"))
+                .Add(new DelComponent<TriggerEnterEvent>("short"))
+                .Add(new DelComponent<TriggerExitEvent>("short"))
+                .Add(new DelComponent<SceneLoadedEvent>("short"))
+                .Add(new DelComponent<PcInitialization>());
 
             InjectWithinSystems(_updateSystems);
 
             _updateSystems.Inject();
             _updateSystems.Init();
 
-            _world.GetPool<SceneLoadedEvent>().Add(_world.NewEntity());
+            _worldShort.GetPool<SceneLoadedEvent>().Add(_worldShort.NewEntity());
         }
 
         private void InjectWithinSystems(EcsSystems systems)

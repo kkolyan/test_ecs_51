@@ -10,7 +10,7 @@ namespace UnityAware.Systems
     {
         private RaycastHit[] _results = new RaycastHit[1];
 
-        private readonly EcsPoolInject<NavigationRequest> _navRequests = default;
+        private readonly EcsPoolInject<NavigationRequest> _navRequests = "short";
         private EcsFilterInject<Inc<PcMarker>> _pcs = default;
 
         public void Run(EcsSystems systems)

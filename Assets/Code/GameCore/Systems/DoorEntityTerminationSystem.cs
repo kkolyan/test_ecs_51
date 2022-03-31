@@ -6,7 +6,7 @@ namespace GameCore.Systems
 {
     public class DoorEntityTerminationSystem: IEcsRunSystem
     {
-        private EcsFilterInject<Inc<DoorTermination>> _terminations = default;
+        private EcsFilterInject<Inc<DoorTermination>> _terminations = "short";
         
         public void Run(EcsSystems systems)
         {

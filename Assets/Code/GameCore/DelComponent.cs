@@ -1,18 +1,30 @@
 using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
 
 namespace GameCore
 {
-    public class DelComponent<T>: IEcsRunSystem where T : struct
+    public class DelComponent<T>: IEcsRunSystem, IEcsInitSystem
+        where T : struct
     {
-        private EcsFilterInject<Inc<T>> _filter = default;
+        private string _worldName;
+        private EcsFilter _filter;
+        private EcsPool<T> _pool;
+
+        public DelComponent(string worldName = null) {
+            _worldName = worldName;
+        }
 
         public void Run(EcsSystems systems)
         {
-            foreach (int entity in _filter.Value)
+            foreach (int entity in _filter)
             {
-                _filter.Pools.Inc1.Del(entity);
+                _pool.Del(entity);
             }
+        }
+
+        public void Init(EcsSystems systems)
+        {
+            _filter = systems.GetWorld(_worldName).Filter<T>().End();
+            _pool = systems.GetWorld(_worldName).GetPool<T>();
         }
     }
 }

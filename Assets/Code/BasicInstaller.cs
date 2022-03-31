@@ -15,6 +15,7 @@ public class BasicInstaller : ScriptableObjectInstaller<BasicInstaller>
     {
         Container.BindInstance(new CoreTime());
         Container.BindInstance(new EcsWorld());
+        Container.BindInstance(new EcsWorld()).WithId("short");
         Container.Bind<AssetRefs>().FromScriptableObject(assetRefs).AsTransient();
         Container.Bind<Pc.Factory>().AsSingle();
         Container.Bind<DestPointer.Factory>().AsSingle();
